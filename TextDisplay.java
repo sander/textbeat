@@ -11,13 +11,21 @@ class TextDisplay {
   final int backgroundColor;
   final int foregroundColor;
   final int intenseColor;
+  final int x;
+  final int y;
+  final int width;
+  final int height;
 
   // State
   Cursor cur;
   int textColor;
 
-  TextDisplay(PApplet parent) {
+  TextDisplay(PApplet parent, int x, int y, int width, int height) {
     this.parent = parent;
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
     
     font = parent.createFont(fontName, fontSize);
     backgroundColor = parent.color(255, 255, 255);
@@ -26,30 +34,42 @@ class TextDisplay {
   }
 
   void doSetup() {
-    parent.background(backgroundColor);
-    parent.size(800, 600);
-    parent.fill(foregroundColor);
+    parent.pushMatrix();
+    parent.translate(x, y);
+    
     parent.noStroke();
+    parent.fill(backgroundColor);
+    parent.rect(0, 0, width, height);
+    parent.fill(foregroundColor);
     parent.textFont(font);
     parent.textAlign(parent.LEFT, parent.TOP);
 
     cur = new Cursor(margin[3], margin[0], (int)parent.textWidth(' '), (int)(fontSize * 1.4), foregroundColor, backgroundColor, 250);
+    
     cur.doDraw(parent);
+    
+    parent.popMatrix();
     
     textColor = foregroundColor;
   }
 
   void doDraw() {
     int t = parent.millis();
+    parent.pushMatrix();
+    parent.translate(x, y);
     cur.doDrawFaded(parent, t);
+    parent.popMatrix();
   }
 
   void doType() {
+    parent.pushMatrix();
+    parent.translate(x, y);
     if (parent.key == '\n') {
       doDrawReturn();
     } else {
       doDraw(parent.key);
     }
+    parent.popMatrix();
   }
 
   void doDraw(char c) {
@@ -72,7 +92,7 @@ class TextDisplay {
   }
 
   boolean canAddWidth(float w) {
-    return cur.x + w <= parent.width - margin[1] - margin[3];
+    return cur.x + w <= width - margin[1] - margin[3];
   }
 
   void doBreakLine() {

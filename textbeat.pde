@@ -1,6 +1,9 @@
 import processing.serial.*;
 
-final TextDisplay td = new TextDisplay(this);
+final int w = 800;
+final int h = 600;
+final int debugHeight = 0;
+final TextDisplay td = new TextDisplay(this, 0, 0, w, h - debugHeight);
 final RRport myport = new RRport(this);
 final RRparser myparser = new RRparser();
 
@@ -10,6 +13,7 @@ int RRavg = 1200;
 int RRstd = 50;
 
 void setup() {
+  size(w, h);
   td.doSetup();
 }
 
@@ -19,11 +23,6 @@ void draw() {
 
 void keyTyped() {
   td.doType();
-  /*
-  println(RRavg);
-  println(RRstd);
-  println();
-  */
 }
 
 void mouseMoved() {
@@ -32,7 +31,7 @@ void mouseMoved() {
 }
 
 void serialEvent(Serial p) {
-  if(myport == null) return;
+  if (myport == null) return;
   myport.step();
   myparser.step();
   
