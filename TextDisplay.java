@@ -46,7 +46,7 @@ class TextDisplay {
 
     cur = new Cursor(margin[3], margin[0], (int)parent.textWidth(' '), (int)(fontSize * 1.4), foregroundColor, backgroundColor, 250);
     
-    cur.doDraw(parent);
+    //cur.doDraw(parent);
     
     parent.popMatrix();
     
@@ -88,7 +88,7 @@ class TextDisplay {
   void doDrawReturn() {
     cur.doClear(parent);
     doBreakLine();
-    cur.doDraw(parent);
+    cur.doDrawFaded(parent, parent.millis());
   }
 
   boolean canAddWidth(float w) {
