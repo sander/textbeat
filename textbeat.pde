@@ -14,7 +14,6 @@ void setup() {
 }
 
 void draw() {
-  td.doSetRR(RR);
   td.doDraw();
 }
 
@@ -48,6 +47,9 @@ void serialEvent(Serial p) {
     print(" STD="); 
     print(RRstd);//niet met kwadraat ivm outlyers
     println();
+    
+    td.doPulse(RR);
+    td.doUpdateSteady(RRstd);
 
     //float BTopt = 15.00; //assumed resonant breathing rate in seconds
     //int advice = int(BTopt*1000/RRavg); //idem in heart beats

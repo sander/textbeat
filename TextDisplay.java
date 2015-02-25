@@ -83,12 +83,19 @@ class TextDisplay {
     //cur = cur.pulsate((int)(parent.lerp(100, 2000, v)));
   }
   
-  void doSetRR(int RR) {
-    cur = cur.pulsate(RR);
-  }
-
   void doSetParameter2(float v) {
+    /*
     textColor = parent.lerpColor(foregroundColor, intenseColor, v);
     cur = cur.recolor(textColor);
+    */
+  }
+  
+  void doPulse(int RR) {
+    cur = cur.pulsate(parent.millis());
+  }
+  
+  void doUpdateSteady(int RRstd) {
+    float f = parent.constrain(parent.map(RRstd, 100, 200, 0, 1), 0, 1);
+    textColor = parent.lerpColor(intenseColor, foregroundColor, f);
   }
 }
