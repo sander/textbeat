@@ -119,6 +119,7 @@ class TextDisplay {
   void doUpdateSteady(int RRstd) {
     float f = parent.constrain(parent.map(RRstd, 100, 200, 0, 1), 0, 1);
     textColor = parent.lerpColor(intenseColor, foregroundColor, f);
+    cur = cur.recolor(textColor);
   }
 
   void doSetActive(boolean active) {

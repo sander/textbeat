@@ -89,7 +89,6 @@ final class Cursor {
     parent.rotate(angle);
     parent.ellipse((float)width/3, 0, 4, 4);
     parent.popMatrix();
-    parent.println("drawing adjusting" + angle + ", " + fg);
   }
 
   void doClear(PApplet parent) {
