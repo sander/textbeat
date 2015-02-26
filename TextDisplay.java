@@ -44,7 +44,9 @@ class TextDisplay {
     parent.textFont(font);
     parent.textAlign(parent.LEFT, parent.TOP);
 
-    cur = new Cursor(margin[3], margin[0], (int)parent.textWidth(' '), (int)(fontSize * 1.4), foregroundColor, backgroundColor, 250);
+    final int curWidth = 25;//(int)parent.textWidth(' ');
+    final int curHeight = 25;//(int)(fontSize * 1.4);
+    cur = new Cursor(margin[3], margin[0], curWidth, curHeight, foregroundColor, backgroundColor, 250);
     
     //cur.doDraw(parent);
     

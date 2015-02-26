@@ -20,9 +20,16 @@ final class Cursor {
   }
 
   void doDraw(PApplet parent, int c) {
+    doDraw(parent, c, width);
+  }
+  
+  void doDraw(PApplet parent, int c, float r) {
     parent.noStroke();
-    parent.fill(c);
+    //parent.stroke(0);
+    parent.fill(bg);
     parent.rect(x, y, width, height);
+    parent.fill(c);
+    parent.ellipse(x + (float)width / 2, y + (float)height / 2, r, r);
   }
 
   void doDraw(PApplet parent) {
@@ -33,13 +40,16 @@ final class Cursor {
     final int steps = t - t0;
     final int thres1 = 200;
     final int thres2 = 500;
-    final int c =
-      (steps < thres1)
-      ? parent.lerpColor(fg, bg, (float)(steps) / thres1)
-        : (steps < thres2)
-          ? parent.lerpColor(fg, bg, (float)(steps - thres1) / (thres2 - thres1))
-            : bg;
-    doDraw(parent, c);
+    final float f = parent.constrain(
+    (steps < thres1)
+      ? (float)(steps) / thres1
+      : (steps < thres2)
+      ? (float)(steps - thres1) / (thres2 - thres1)
+      : 1, 0, 1);
+    //final int c = parent.lerpColor(fg, bg, f);
+    final int c = fg;
+    final float r = parent.lerp(width, (float)width / 2, f);
+    doDraw(parent, c, r);
   }
 
   void doClear(PApplet parent) {
