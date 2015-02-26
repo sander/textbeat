@@ -12,6 +12,7 @@ final ButtonPort btn = new ButtonPort(this, "/dev/tty.usbmodem1411");
 int RR = 1200;
 int RRavg = 1200;
 int RRstd = 50;
+boolean wasAdjusting = false;
 
 void setup() {
   size(w, h);
@@ -34,12 +35,17 @@ void mouseMoved() {
 void serialEvent(Serial p) {
   if (btn != null && p == btn.port) {
     if (btn.doStep()) {
+      td.doSetActive(btn.pressed);
       println("update: " + btn.pressed);
     }
   } else {
     if (myport == null) return;
     myport.step();
     myparser.step();
+    
+    if (myparser.adjusting != wasAdjusting && btn.pressed) {
+      td.doSetAdjusting(wasAdjusting = myparser.adjusting);
+    }
 
     if (myparser.event()) {
       RR = myparser.val; 
@@ -54,6 +60,11 @@ void serialEvent(Serial p) {
       println();
 
       if (btn.pressed) {
+        /*
+        if (myparser.adjusting != wasAdjusting) {
+          td.doSetAdjusting(false);
+        }
+        */
         td.doPulse(RR);
       }
       td.doUpdateSteady(RRstd);

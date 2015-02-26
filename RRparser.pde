@@ -5,14 +5,15 @@ class RRparser {
   int avg = 1000;
   private int tmp=0;
   private boolean flag;
-  
+  boolean adjusting;
+
   boolean event() {
     if (flag) {
       flag = false; 
       return true;
     } else return false;
   }    
-  
+
   void step() {
     int b;
     //print('.');
@@ -24,23 +25,26 @@ class RRparser {
       if ((tmp>0)&&(b==10||b==13)) {
         flag = true; 
         val=tmp/1000;//ms ipv us
-        if (val>600&&val<1600) avg = 9*(avg/10) + val/10;   //fake feedback         
-        if (val<0.5*avg) {
-          println(" adjusting sensor "); 
-          //output.println(0); 
-          flag=false;
-        }  
-        if (val>1.5*avg) {
-          println(" ADJUSTING SENSOR "); 
-          //output.println(00); 
-          flag=false;
-        }
+        if (val>600&&val<1600) avg = 9*(avg/10) + val/10;   //fake feedback   
+        /*      
+         if (val<0.5*avg) {
+         println(" adjusting sensor "); 
+         //output.println(0); 
+         flag=false;
+         }  
+         if (val>1.5*avg) {
+         println(" ADJUSTING SENSOR "); 
+         //output.println(00); 
+         flag=false;
+         }
+         */
+        adjusting = (val < 0.5 * avg || val > 1.5 * avg);
       }
       if ((b==10||b==13)) tmp=0;     
       if (b!=10&&b!=13)   tmp=16*tmp + hex2int(b); //msb first
     }
   }
-  
+
   private int hex2int(int c) {
     if (c=='0') return 0;  
     if (c=='1') return 1;  
@@ -61,5 +65,4 @@ class RRparser {
     println("!@#$%"); //TZT ERUIT
     return -1;
   }
-  
 }// RRparser

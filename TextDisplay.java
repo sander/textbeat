@@ -26,7 +26,7 @@ class TextDisplay {
     this.y = y;
     this.width = width;
     this.height = height;
-    
+
     font = parent.createFont(fontName, fontSize);
     backgroundColor = parent.color(255, 255, 255);
     foregroundColor = parent.color(150);
@@ -36,7 +36,7 @@ class TextDisplay {
   void doSetup() {
     parent.pushMatrix();
     parent.translate(x, y);
-    
+
     parent.noStroke();
     parent.fill(backgroundColor);
     parent.rect(0, 0, width, height);
@@ -46,12 +46,12 @@ class TextDisplay {
 
     final int curWidth = 25;//(int)parent.textWidth(' ');
     final int curHeight = 25;//(int)(fontSize * 1.4);
-    cur = new Cursor(margin[3], margin[0], curWidth, curHeight, foregroundColor, backgroundColor, 250);
-    
+    cur = new Cursor(Cursor.State.INACTIVE, margin[3], margin[0], curWidth, curHeight, foregroundColor, backgroundColor, 250);
+
     //cur.doDraw(parent);
-    
+
     parent.popMatrix();
-    
+
     textColor = foregroundColor;
   }
 
@@ -104,20 +104,38 @@ class TextDisplay {
   void doSetParameter1(float v) {
     //cur = cur.pulsate((int)(parent.lerp(100, 2000, v)));
   }
-  
+
   void doSetParameter2(float v) {
     /*
     textColor = parent.lerpColor(foregroundColor, intenseColor, v);
-    cur = cur.recolor(textColor);
-    */
+     cur = cur.recolor(textColor);
+     */
   }
-  
+
   void doPulse(int RR) {
     cur = cur.pulsate(parent.millis());
   }
-  
+
   void doUpdateSteady(int RRstd) {
     float f = parent.constrain(parent.map(RRstd, 100, 200, 0, 1), 0, 1);
     textColor = parent.lerpColor(intenseColor, foregroundColor, f);
+  }
+
+  void doSetActive(boolean active) {
+    if (active) {
+      cur = cur.active(parent.millis());
+    } else {
+      cur = cur.inactive(parent.millis());
+    }
+  }
+
+  void doSetAdjusting(boolean adjusting) {
+    if (adjusting) {
+      parent.println("adjusting!!");
+      cur = cur.adjust(parent.millis());
+    } else {
+      parent.println("not adjusting!!");
+      cur = cur.active(parent.millis());
+    }
   }
 }
