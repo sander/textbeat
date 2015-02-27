@@ -3,10 +3,10 @@ import processing.core.*;
 class TextDisplay {
   final PApplet parent;
   final String fontName = "FiraMonoOT-Bold";
-  final int fontSize = 18;
+  final int fontSize = 24;
   final PFont font;
   final int[] margin = {
-    12, 12, 12, 12
+    228 + 22, 158, 200, 158 
   };
   final int backgroundColor;
   final int foregroundColor;
@@ -38,15 +38,17 @@ class TextDisplay {
     parent.pushMatrix();
     parent.translate(x, y);
 
+    final PImage img = parent.loadImage("e-mail-screen.png");
+    parent.image(img, 0, 22);
+
     parent.noStroke();
-    parent.fill(backgroundColor);
-    parent.rect(0, 0, width, height);
+    //parent.fill(backgroundColor);
+    //parent.rect(0, 0, width, height);
     parent.fill(foregroundColor);
-    parent.textFont(font);
     parent.textAlign(parent.LEFT, parent.TOP);
 
-    final int curWidth = 25;//(int)parent.textWidth(' ');
-    final int curHeight = 25;//(int)(fontSize * 1.4);
+    final int curWidth = 32;//(int)parent.textWidth(' ');
+    final int curHeight = 32;//(int)(fontSize * 1.4);
     cur = new Cursor(Cursor.State.INACTIVE, margin[3], margin[0], curWidth, curHeight, foregroundColor, backgroundColor, 250);
 
     //cur.doDraw(parent);
@@ -91,6 +93,8 @@ class TextDisplay {
     */
 
     parent.fill(textColor);
+    parent.textSize(fontSize);
+    parent.textFont(font);
     parent.text(c, cur.x, cur.y);
 
     cur = cur.move(w, 0);

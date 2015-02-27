@@ -1,8 +1,8 @@
 import processing.serial.*;
 import ddf.minim.analysis.*;
 
-final int w = 800;
-final int h = 600;
+final int w = 1440;
+final int h = 900;
 int debugHeight = 0;
 final TextDisplay td = new TextDisplay(this, 0, 0, w, h);
 final RRport myport = new RRport(this);
@@ -46,9 +46,7 @@ void keyReleased() {
     rect(0, height - debugHeight, width, debugHeight);
     debugHeight = 0;
   } else {
-    println("typed");
     td.doType();
-    println("  handled");
   }
 }
 

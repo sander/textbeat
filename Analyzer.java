@@ -1,9 +1,10 @@
 import ddf.minim.analysis.*;
 import java.util.Arrays;
-import processing.core.PApplet;
+import processing.core.*;
 
 final class Analyzer {
   final int skipFirst = 1;
+  final int fontSize = 16;
 
   final static class Result {
     final float[] RRbuffer;
@@ -57,6 +58,7 @@ final class Analyzer {
       app.line(0, height / 2 - 0.5f, width, height / 2 - 0.5f);
       app.line(0, height - 1, width, height - 1);
       app.textAlign(app.LEFT, app.BOTTOM);
+      app.textSize(18);
       app.text("RR (time)", 4, 30);
       app.text("Amplitude (frequency)", 4, height / 2 + 30);
       app.textAlign(app.RIGHT, app.BOTTOM);
