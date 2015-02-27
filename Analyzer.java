@@ -73,8 +73,7 @@ final class Analyzer {
     if (b == 0) return 0f;
     final float factor = .9f;
     float x = (float)Math.log(a / b);
-    System.out.println(x);
-    return Math.min(1.0f, Math.max(0f, x / 1f));
+    return Math.min(1.0f, Math.max(0f, x / factor));
   }
 
   final Result calculate(final SlidingBuffer<Integer> RR, final int size) {

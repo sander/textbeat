@@ -9,7 +9,7 @@ final RRport myport = new RRport(this);
 final RRparser myparser = new RRparser();
 final ButtonPort btn = new ButtonPort(this, "/dev/tty.usbmodem1411");
 final Analyzer analyzer = new Analyzer();
-final int size = 32;
+final int size = 16;
 
 // State
 int RR = 1200;
