@@ -19,6 +19,7 @@ class TextDisplay {
   // State
   Cursor cur;
   int textColor;
+  float score;
 
   TextDisplay(PApplet parent, int x, int y, int width, int height) {
     this.parent = parent;
@@ -80,8 +81,18 @@ class TextDisplay {
     cur.doClear(parent);
     if (!canAddWidth(w))
       doBreakLine();
+
+    /*
+    // Extra highlight
+    if (score < 0.2) {
+      parent.fill(255);
+      parent.rect(cur.x, cur.y, cur.width, cur.height);
+    }
+    */
+
     parent.fill(textColor);
     parent.text(c, cur.x, cur.y);
+
     cur = cur.move(w, 0);
     if (!canAddWidth(cur.width))
       doBreakLine();
@@ -125,6 +136,7 @@ class TextDisplay {
   }
   
   void doUpdateScore(float score) {
+    this.score = score;
     textColor = parent.lerpColor(intenseColor, foregroundColor, score);
     cur = cur.recolor(textColor);
   }

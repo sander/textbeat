@@ -31,7 +31,6 @@ void draw() {
 }
 
 void keyTyped() {
-  td.doType();
 }
 
 void keyPressed() {
@@ -46,6 +45,10 @@ void keyReleased() {
     noStroke();
     rect(0, height - debugHeight, width, debugHeight);
     debugHeight = 0;
+  } else {
+    println("typed");
+    td.doType();
+    println("  handled");
   }
 }
 
