@@ -56,6 +56,8 @@ class TextDisplay {
     parent.popMatrix();
 
     textColor = foregroundColor;
+
+    doDraw(' ');
   }
 
   void doDraw() {
