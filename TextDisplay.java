@@ -28,9 +28,9 @@ class TextDisplay {
     this.height = height;
 
     font = parent.createFont(fontName, fontSize);
-    backgroundColor = parent.color(255, 255, 255);
-    foregroundColor = parent.color(150);
-    intenseColor = parent.color(255, 0, 0);
+    backgroundColor = parent.color(254, 247, 226);
+    foregroundColor = parent.color(143, 162, 162);
+    intenseColor = parent.color(220, 57, 0);
   }
 
   void doSetup() {
@@ -117,8 +117,15 @@ class TextDisplay {
   }
 
   void doUpdateSteady(int RRstd) {
+    /*
     float f = parent.constrain(parent.map(RRstd, 100, 200, 0, 1), 0, 1);
     textColor = parent.lerpColor(intenseColor, foregroundColor, f);
+    cur = cur.recolor(textColor);
+    */
+  }
+  
+  void doUpdateScore(float score) {
+    textColor = parent.lerpColor(intenseColor, foregroundColor, score);
     cur = cur.recolor(textColor);
   }
 

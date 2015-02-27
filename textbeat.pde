@@ -1,18 +1,23 @@
 import processing.serial.*;
+import ddf.minim.analysis.*;
 
 final int w = 800;
 final int h = 600;
-final int debugHeight = 0;
-final TextDisplay td = new TextDisplay(this, 0, 0, w, h - debugHeight);
+int debugHeight = 0;
+final TextDisplay td = new TextDisplay(this, 0, 0, w, h);
 final RRport myport = new RRport(this);
 final RRparser myparser = new RRparser();
 final ButtonPort btn = new ButtonPort(this, "/dev/tty.usbmodem1411");
+final Analyzer analyzer = new Analyzer();
+final int size = 32;
 
 // State
 int RR = 1200;
 int RRavg = 1200;
 int RRstd = 50;
 boolean wasAdjusting = false;
+SlidingBuffer<Integer> buffer = new SlidingBuffer<Integer>(size);
+Analyzer.Result result;
 
 void setup() {
   size(w, h);
@@ -21,10 +26,27 @@ void setup() {
 
 void draw() {
   td.doDraw();
+  if (result != null && debugHeight > 0)
+    result.doDraw(this, 0, height - debugHeight, width, debugHeight);
 }
 
 void keyTyped() {
   td.doType();
+}
+
+void keyPressed() {
+  if (keyCode == 17 /* ctrl */) {
+    debugHeight = 200;
+  }
+}
+
+void keyReleased() {
+  if (keyCode == 17 /* ctrl */) {
+    fill(td.backgroundColor);
+    noStroke();
+    rect(0, height - debugHeight, width, debugHeight);
+    debugHeight = 0;
+  }
 }
 
 void mouseMoved() {
@@ -36,7 +58,6 @@ void serialEvent(Serial p) {
   if (btn != null && p == btn.port) {
     if (btn.doStep()) {
       td.doSetActive(btn.pressed);
-      println("update: " + btn.pressed);
     }
   } else {
     if (myport == null) return;
@@ -66,6 +87,9 @@ void serialEvent(Serial p) {
         }
         */
         td.doPulse(RR);
+        buffer.add(RR);
+        result = analyzer.calculate(buffer, size);
+        td.doUpdateScore(result.score);
       }
       td.doUpdateSteady(RRstd);
 
