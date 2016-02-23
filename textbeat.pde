@@ -57,6 +57,7 @@ void mouseMoved() {
 
 class Handler implements LubDubHandler {
   void handle(int RR) {
+    RR = Math.round(RR / 1.024);
     print(" RR="); 
     print(RR); 
     RRavg = int((23 * RRavg + 1*RR)/24); 

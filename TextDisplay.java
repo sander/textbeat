@@ -2,7 +2,7 @@ import processing.core.*;
 
 class TextDisplay {
   final PApplet parent;
-  final String fontName = "FiraMonoOT-Bold";
+  final String fontName = "FiraMono-Bold";
   final int fontSize = 24;
   final PFont font;
   final int[] margin = {
